@@ -39,7 +39,7 @@ public class User {
 	private boolean enabled = true;
 	private String profile;
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL , fetch = FetchType.LAZY )
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL , fetch = FetchType.EAGER )
 	@JsonIgnore
 	private Set<UserRole> userRole = new HashSet<UserRole>();
 }
