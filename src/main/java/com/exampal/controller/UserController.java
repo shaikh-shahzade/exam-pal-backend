@@ -37,7 +37,6 @@ public class UserController {
 	@GetMapping("")
 	public	List<User> getAlluser()
 	{
-		Integer[] halfarr = new Integer[3];
 		
 		return this.userService.getAllUser();
 	}
