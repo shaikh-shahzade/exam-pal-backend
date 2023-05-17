@@ -1,5 +1,7 @@
 package com.exampal.model;
 
+import org.springframework.security.core.userdetails.UserDetails;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class jwtLoginResponse {
+public class JwtLoginResponse {
 
-	String token;
+	private String token;
+	private UserDetails userDetails;
 }

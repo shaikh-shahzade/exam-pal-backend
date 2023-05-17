@@ -1,5 +1,7 @@
 package com.exampal.controller;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -19,10 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.exampal.config.JwtUtil;
 import com.exampal.model.JwtRequest;
+import com.exampal.model.JwtLoginResponse;
 
-@CrossOrigin("*")
 @RestController
 @RequestMapping("auth")
+@CrossOrigin("*")
 public class AuthController {
 
 	@Autowired
@@ -35,7 +38,7 @@ public class AuthController {
 	private UserDetailsService userDetailsService;
 
 	@PostMapping("/generate")
-	public ResponseEntity<String> getToken(@RequestBody JwtRequest jwtRequest) throws Exception {
+	public ResponseEntity<JwtLoginResponse> getToken(@RequestBody JwtRequest jwtRequest) throws Exception {
 		// assuming request dont have token
 		System.out.println("username");
 		String username = jwtRequest.getUsername();
@@ -44,8 +47,7 @@ public class AuthController {
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
 		final String token = jwtUtil.generateToken(userDetails);
-
-		return new ResponseEntity<String>(token, HttpStatus.OK);
+		return new ResponseEntity<JwtLoginResponse>(new JwtLoginResponse(token,userDetails), HttpStatus.OK);
 	}
 
 	private void authenticate(String username, String password) throws Exception {
