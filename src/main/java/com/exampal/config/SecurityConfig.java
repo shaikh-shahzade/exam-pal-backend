@@ -27,7 +27,7 @@ public class SecurityConfig {
 	{
 		http.csrf().disable()
 		.authorizeHttpRequests()
-		.requestMatchers("auth/generate" ,"user/create")
+		.requestMatchers("auth/generate","/public/**","/images/**","user/create")
 		.permitAll()
 		.anyRequest()
 		.authenticated()
