@@ -2,6 +2,7 @@ package com.exampal.model;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -49,7 +50,9 @@ public class User implements UserDetails {
 	@JsonIgnore
 	private Set<UserRole> userRole = new HashSet<UserRole>();
 
-	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<Quiz> quizes ; 
 	//Security Methods
 	
 	

@@ -1,14 +1,18 @@
 package com.exampal.model;
 
+import java.util.List;
+
 import org.hibernate.annotations.GeneratorType;
 import org.hibernate.id.factory.spi.GenerationTypeStrategy;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,10 +36,15 @@ public class Quiz {
 	private int noOfQuestions;
 	private int maxTime;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	private User owner;
+	@ManyToOne()
+	private User user;
 	
-	private int cid;
+	@OneToMany(mappedBy = "quiz" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Question> question;
+	
+	@ManyToOne()
+	private Category category;
+	//private int cid;
 	
 	
 }
