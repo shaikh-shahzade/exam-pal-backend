@@ -28,7 +28,7 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
-	@GetMapping("/{id}")
+	@GetMapping("{id}")
 	public User getUserById(@PathVariable(name = "id") Integer id) {
 		return this.userService.getUserById(id);
 	}

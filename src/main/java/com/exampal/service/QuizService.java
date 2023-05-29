@@ -7,13 +7,13 @@ import com.exampal.model.Quiz;
 
 public interface QuizService {
 
-	public Quiz createQuiz(Quiz quiz);
+	public Quiz createQuiz(Quiz quiz, String username);
 	
 	public List<Quiz> getAllQuiz();
 	
-	public Quiz getQuizById(Integer qid);
+	public Quiz getQuizById(Long qid);
 	
-	public Quiz updateQuiz(Integer qid , Quiz quiz);
+	public Quiz updateQuiz(Long qid , Quiz quiz);
 	
-	public Quiz deleteQuiz(Integer qid);
+	public Quiz deleteQuiz(Long qid);
 }

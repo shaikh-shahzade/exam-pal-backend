@@ -5,44 +5,72 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.exampal.model.Question;
 import com.exampal.model.Quiz;
+import com.exampal.model.User;
+import com.exampal.repo.QuestionRepository;
 import com.exampal.repo.QuizRepository;
+import com.exampal.repo.UserRepository;
 import com.exampal.service.QuizService;
 
 @Service
 public class QuizServiceImpl implements QuizService {
 
 	@Autowired
-	private QuizRepository quizRepo;
+	QuizRepository quizRepo;
 	
+	@Autowired
+	UserRepository userRepo;
+	
+	@Autowired
+	QuestionRepository questionRepo;
 	@Override
-	public Quiz createQuiz(Quiz quiz) {
+	public Quiz createQuiz(Quiz quiz , String username) {
 		// TODO Auto-generated method stub
-		return null;
+		User user = userRepo.findUserByUsername(username);
+		quiz.setUser(user);
+		List<Question> questions = questionRepo.saveAll(quiz.getQuestion());
+		quiz.setQuestion(questions);
+		
+		Quiz q = quizRepo.save(quiz);
+		return q;
 	}
 
 	@Override
 	public List<Quiz> getAllQuiz() {
 		// TODO Auto-generated method stub
-		return null;
+		List<Quiz> quizes = quizRepo.findAll();
+		return quizes;
 	}
 
 	@Override
-	public Quiz getQuizById(Integer qid) {
+	public Quiz getQuizById(Long qid) {
 		// TODO Auto-generated method stub
-		return null;
+		Quiz q =  quizRepo.findById(qid).get();
+		return q;
 	}
 
 	@Override
-	public Quiz updateQuiz(Integer qid, Quiz quiz) {
+	public Quiz updateQuiz(Long qid, Quiz quiz) {
 		// TODO Auto-generated method stub
-		return null;
+		Quiz q =  quizRepo.findById(qid).get();
+		q.setActive(quiz.isActive());
+		q.setDescription(quiz.getDescription());
+		q.setMaxMarks(quiz.getMaxMarks());
+		q.setMaxTime(quiz.getMaxTime());
+		q.setNoOfQuestions(quiz.getNoOfQuestions());
+		q.setTitle(quiz.getTitle());
+		
+		q = quizRepo.save(q);
+		return q;
 	}
 
 	@Override
-	public Quiz deleteQuiz(Integer qid) {
+	public Quiz deleteQuiz(Long qid) {
 		// TODO Auto-generated method stub
-		return null;
+		Quiz q = quizRepo.findById(qid).get();
+		quizRepo.delete(q);
+		return q;
 	}
 
 	
