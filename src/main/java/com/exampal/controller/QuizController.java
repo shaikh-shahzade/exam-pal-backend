@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.exampal.model.Category;
 import com.exampal.model.Quiz;
 import com.exampal.repo.UserRepository;
 import com.exampal.service.QuizService;
@@ -42,7 +43,7 @@ public class QuizController {
 	}
 	
 	@PostMapping("")
-	public	Quiz createQuiz(@RequestBody Quiz quiz , Principal principal)
+	public	Quiz createQuiz(@RequestBody Quiz quiz ,Principal principal)
 	{
 		
 		return quizService.createQuiz(quiz , principal.getName());

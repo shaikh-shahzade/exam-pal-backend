@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.exampal.model.Category;
 import com.exampal.model.Question;
 import com.exampal.model.Quiz;
 import com.exampal.model.User;
+import com.exampal.repo.CategoryRepository;
 import com.exampal.repo.QuestionRepository;
 import com.exampal.repo.QuizRepository;
 import com.exampal.repo.UserRepository;
@@ -24,13 +26,30 @@ public class QuizServiceImpl implements QuizService {
 	
 	@Autowired
 	QuestionRepository questionRepo;
+	
+	@Autowired
+	CategoryRepository catRepository;
+	
 	@Override
 	public Quiz createQuiz(Quiz quiz , String username) {
 		// TODO Auto-generated method stub
 		User user = userRepo.findUserByUsername(username);
+		
 		quiz.setUser(user);
-		List<Question> questions = questionRepo.saveAll(quiz.getQuestion());
-		quiz.setQuestion(questions);
+		List<Question> questions;
+		if(quiz.getQuestion()!=null)
+		{
+			questions= questionRepo.saveAll(quiz.getQuestion());
+			quiz.setQuestion(questions);
+
+		}
+		
+		Category cat = quiz.getCategory();
+		System.out.println(cat+"DDDDDDDDDD");
+			if(cat!=null&&(cat.getCid()==null||!catRepository.existsById(cat.getCid())))
+				cat = catRepository.save(cat);
+		
+		quiz.setCategory(cat);
 		
 		Quiz q = quizRepo.save(quiz);
 		return q;
