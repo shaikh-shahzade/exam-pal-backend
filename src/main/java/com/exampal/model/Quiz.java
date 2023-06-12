@@ -1,5 +1,6 @@
 package com.exampal.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.hibernate.annotations.GeneratorType;
@@ -35,6 +36,7 @@ public class Quiz {
 	private int maxMarks;
 	private int noOfQuestions;
 	private int maxTime;
+	
 	
 	@ManyToOne()
 	private User user;
