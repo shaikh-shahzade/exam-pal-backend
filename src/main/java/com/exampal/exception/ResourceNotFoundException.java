@@ -1,6 +1,6 @@
 package com.exampal.exception;
 
-public class ResourceNotFoundException extends Exception{
+public class ResourceNotFoundException extends RuntimeException{
 
 	public ResourceNotFoundException(String resource , String value , Long id) {
 		// TODO Auto-generated constructor stub

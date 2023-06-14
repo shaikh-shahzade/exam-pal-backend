@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.exampal.exception.ResourceNotFoundException;
 import com.exampal.model.User;
 import com.exampal.model.UserRole;
 import com.exampal.repo.RoleRepository;
@@ -44,13 +45,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUserById(Integer id) {
-		User user = userRepository.findById(id).orElseThrow();
+	public User getUserById(Long id) {
+		User user = userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User", "User ID", id));
 		return user;
 	}
 
 	@Override
-	public User updateUser(Integer id, User user) {
+	public User updateUser(Long id, User user) {
 		
 		User userResult = userRepository.findById(id).orElseThrow();
 		user.setId(userResult.getId());
@@ -59,7 +60,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User deleteUser(Integer id) {
+	public User deleteUser(Long id) {
 		User userResult = userRepository.findById(id).orElseThrow();
 		userRepository.delete(userResult);
 		return userResult;

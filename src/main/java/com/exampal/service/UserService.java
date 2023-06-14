@@ -16,9 +16,9 @@ public interface UserService {
 	
 	public List<User> getAllUser();
 	
-	public User getUserById(Integer id);
+	public User getUserById(Long id);
 	
-	public User updateUser(Integer id , User user);
+	public User updateUser(Long id , User user);
 	
-	public User deleteUser(Integer id);
+	public User deleteUser(Long id);
 }
