@@ -36,6 +36,8 @@ public class Quiz {
 	private int maxMarks;
 	private int noOfQuestions;
 	private int maxTime;
+	private LocalDate lastDate;
+	private LocalDate startDate;
 	
 	
 	@ManyToOne()
