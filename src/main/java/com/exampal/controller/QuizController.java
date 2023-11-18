@@ -23,7 +23,7 @@ import com.exampal.service.QuizService;
 
 @RestController
 @RequestMapping("quiz")
-@CrossOrigin("*")
+@CrossOrigin(origins ="*")
 public class QuizController {
 
 	@Autowired

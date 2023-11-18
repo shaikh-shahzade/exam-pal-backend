@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.exampal.exception.ResourceNotFoundException;
 import com.exampal.model.Category;
 import com.exampal.model.Question;
 import com.exampal.model.Quiz;
@@ -45,7 +46,7 @@ public class QuizServiceImpl implements QuizService {
 		}
 		
 		Category cat = quiz.getCategory();
-		System.out.println(cat+"DDDDDDDDDD");
+		//System.out.println(cat+"DDDDDDDDDD");
 			if(cat!=null&&(cat.getCid()==null||!catRepository.existsById(cat.getCid())))
 				cat = catRepository.save(cat);
 		
@@ -65,14 +66,14 @@ public class QuizServiceImpl implements QuizService {
 	@Override
 	public Quiz getQuizById(Long qid) {
 		// TODO Auto-generated method stub
-		Quiz q =  quizRepo.findById(qid).get();
+		Quiz q =  quizRepo.findById(qid).orElseThrow(()->new ResourceNotFoundException("Quiz", "ID", qid));
 		return q;
 	}
 
 	@Override
 	public Quiz updateQuiz(Long qid, Quiz quiz) {
 		// TODO Auto-generated method stub
-		Quiz q =  quizRepo.findById(qid).get();
+		Quiz q =  quizRepo.findById(qid).orElseThrow(()->new ResourceNotFoundException("Quiz", "ID", qid));
 		q.setActive(quiz.isActive());
 		q.setDescription(quiz.getDescription());
 		q.setMaxMarks(quiz.getMaxMarks());
@@ -87,7 +88,7 @@ public class QuizServiceImpl implements QuizService {
 	@Override
 	public Quiz deleteQuiz(Long qid) {
 		// TODO Auto-generated method stub
-		Quiz q = quizRepo.findById(qid).get();
+		Quiz q = quizRepo.findById(qid).orElseThrow(()->new ResourceNotFoundException("Quiz", "ID", qid));
 		quizRepo.delete(q);
 		return q;
 	}
