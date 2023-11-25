@@ -23,16 +23,17 @@ import com.exampal.service.QuizService;
 
 @RestController
 @RequestMapping("quiz")
-@CrossOrigin(origins ="*")
+@CrossOrigin("*")
 public class QuizController {
 
 	@Autowired
 	QuizService quizService;
 	
 	
-	@GetMapping("")
+	@GetMapping("retrieve")
 	public	List<Quiz> getAllQuiz()
 	{
+		System.out.print("called");
 		return quizService.getAllQuiz();
 	}
 	
