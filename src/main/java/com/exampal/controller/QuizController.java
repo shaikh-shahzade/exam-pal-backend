@@ -21,6 +21,8 @@ import com.exampal.model.Quiz;
 import com.exampal.repo.UserRepository;
 import com.exampal.service.QuizService;
 
+import jakarta.websocket.server.PathParam;
+
 @RestController
 @RequestMapping("quiz")
 @CrossOrigin("*")
@@ -37,8 +39,8 @@ public class QuizController {
 		return quizService.getAllQuiz();
 	}
 	
-	@GetMapping("id")
-	public	Quiz getQuizById(@RequestHeader Long id)
+	@GetMapping("{id}")
+	public	Quiz getQuizById(@PathVariable(name = "id") Long id)
 	{
 		return quizService.getQuizById(id);
 	}
