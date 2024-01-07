@@ -35,7 +35,7 @@ public class Quiz {
 	private Long qid;
 	private boolean active;
 	private String title;
-	@Column(length = 65555)
+	@Column(length = 99999999)
 	private String description;
 	private int maxMarks;
 	private int noOfQuestions;
