@@ -26,5 +26,4 @@ public class QuizAttempt {
 	private int questionsAttempted;
 	private int attemptTime;
 	private String status;
-	private Quiz quiz;
 }
