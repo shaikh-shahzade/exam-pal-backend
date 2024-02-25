@@ -9,7 +9,7 @@ public interface QuizService {
 
 	public Quiz createQuiz(Quiz quiz, String username);
 	
-	public List<Quiz> getAllQuiz(Integer page, Integer count);
+	public List<Quiz> getAllQuiz(Integer page, Integer count, String sortBy, String sorting);
 	
 	public Quiz getQuizById(Long qid);
 	

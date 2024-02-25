@@ -36,10 +36,13 @@ public class QuizController {
 	@GetMapping("retrieve")
 	public	List<Quiz> getAllQuiz(
 			@RequestParam(name = "page" , defaultValue = "0" ) Integer page,
-			@RequestParam(name = "count" , defaultValue = "10") Integer count
+			@RequestParam(name = "count" , defaultValue = "10") Integer count,
+			@RequestParam(name = "sortBy" , defaultValue = "qid") String sortBy,
+			@RequestParam(name = "sorting" , defaultValue = "ASC") String sorting
+			
 			)
 	{
-		return quizService.getAllQuiz(page,count);
+		return quizService.getAllQuiz(page,count,sortBy,sorting);
 	}
 	
 	@GetMapping("{id}")
