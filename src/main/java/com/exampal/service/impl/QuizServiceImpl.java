@@ -3,6 +3,9 @@ package com.exampal.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.exampal.exception.ResourceNotFoundException;
@@ -46,8 +49,7 @@ public class QuizServiceImpl implements QuizService {
 		}
 		
 		Category cat = quiz.getCategory();
-		//System.out.println(cat+"DDDDDDDDDD");
-			if(cat!=null&&(cat.getCid()==null||!catRepository.existsById(cat.getCid())))
+		if(cat!=null&&(cat.getCid()==null||!catRepository.existsById(cat.getCid())))
 				cat = catRepository.save(cat);
 		
 		quiz.setCategory(cat);
@@ -57,10 +59,11 @@ public class QuizServiceImpl implements QuizService {
 	}
 
 	@Override
-	public List<Quiz> getAllQuiz() {
+	public List<Quiz> getAllQuiz(Integer page, Integer count) {
 		// TODO Auto-generated method stub
-		List<Quiz> quizes = quizRepo.findAll();
-		return quizes;
+		Pageable pageable = PageRequest.of(page, count);
+		Page<Quiz> q = quizRepo.findAll(pageable);
+		return q.getContent();
 	}
 
 	@Override

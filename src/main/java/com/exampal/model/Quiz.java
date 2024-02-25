@@ -42,6 +42,7 @@ public class Quiz {
 	private int maxTime;
 	private LocalDate lastDate;
 	private LocalDate startDate;
+	private String difficulty;
 	
 	
 	@ManyToOne()
