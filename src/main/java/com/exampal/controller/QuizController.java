@@ -38,11 +38,12 @@ public class QuizController {
 			@RequestParam(name = "page" , defaultValue = "0" ) Integer page,
 			@RequestParam(name = "count" , defaultValue = "10") Integer count,
 			@RequestParam(name = "sortBy" , defaultValue = "qid") String sortBy,
-			@RequestParam(name = "sorting" , defaultValue = "ASC") String sorting
+			@RequestParam(name = "sorting" , defaultValue = "ASC") String sorting,
+			@RequestParam(name="search" , defaultValue = "") String searchKey
 			
 			)
 	{
-		return quizService.getAllQuiz(page,count,sortBy,sorting);
+		return quizService.getAllQuiz(page,count,sortBy,sorting,searchKey);
 	}
 	
 	@GetMapping("{id}")

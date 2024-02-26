@@ -65,10 +65,17 @@ public class QuizServiceImpl implements QuizService {
 			Integer page, 
 			Integer count, 
 			String sortBy, 
-			String sorting) {
+			String sorting,
+			String searchKey) {
 		// TODO Auto-generated method stub
 		Pageable pageable = PageRequest.of(page, count, Sort.by(Direction.fromString(sorting), sortBy));
-		Page<Quiz> q = quizRepo.findAll(pageable);
+		
+		Page<Quiz> q;
+		if(searchKey.isEmpty())
+		q = quizRepo.findAll(pageable);
+		else
+			q= quizRepo.findByTitleIgnoreCaseContaining(searchKey, pageable);
+		
 		return q.getContent();
 	}
 

@@ -9,4 +9,5 @@ import com.exampal.model.Quiz;
 public interface QuizRepository extends JpaRepository<Quiz, Long> {
 
 	public Page<Quiz> findAll(Pageable pageable);
+	public Page<Quiz> findByTitleIgnoreCaseContaining(String title,Pageable pageable );
 }
