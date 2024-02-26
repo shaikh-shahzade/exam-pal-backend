@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.exampal.model.Category;
-import com.exampal.model.Quiz;
+import com.exampal.model.quiz.Category;
+import com.exampal.model.quiz.Quiz;
 import com.exampal.repo.UserRepository;
 import com.exampal.service.QuizService;
 
@@ -33,8 +34,8 @@ public class QuizController {
 	QuizService quizService;
 	
 	
-	@GetMapping("retrieve")
-	public	List<Quiz> getAllQuiz(
+	@GetMapping("list")
+	public	Page<Quiz> getAllQuiz(
 			@RequestParam(name = "page" , defaultValue = "0" ) Integer page,
 			@RequestParam(name = "count" , defaultValue = "10") Integer count,
 			@RequestParam(name = "sortBy" , defaultValue = "qid") String sortBy,

@@ -3,13 +3,15 @@ package com.exampal.service;
 import java.util.List;
 import java.util.Set;
 
-import com.exampal.model.Quiz;
+import org.springframework.data.domain.Page;
+
+import com.exampal.model.quiz.Quiz;
 
 public interface QuizService {
 
 	public Quiz createQuiz(Quiz quiz, String username);
 	
-	public List<Quiz> getAllQuiz(Integer page, Integer count, String sortBy, String sorting, String searchKey);
+	public Page<Quiz> getAllQuiz(Integer page, Integer count, String sortBy, String sorting, String searchKey);
 	
 	public Quiz getQuizById(Long qid);
 	

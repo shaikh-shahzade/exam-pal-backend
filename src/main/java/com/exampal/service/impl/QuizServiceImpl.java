@@ -11,10 +11,10 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.exampal.exception.ResourceNotFoundException;
-import com.exampal.model.Category;
-import com.exampal.model.Question;
-import com.exampal.model.Quiz;
 import com.exampal.model.User;
+import com.exampal.model.quiz.Category;
+import com.exampal.model.quiz.Question;
+import com.exampal.model.quiz.Quiz;
 import com.exampal.repo.CategoryRepository;
 import com.exampal.repo.QuestionRepository;
 import com.exampal.repo.QuizRepository;
@@ -61,7 +61,7 @@ public class QuizServiceImpl implements QuizService {
 	}
 
 	@Override
-	public List<Quiz> getAllQuiz(
+	public Page<Quiz> getAllQuiz(
 			Integer page, 
 			Integer count, 
 			String sortBy, 
@@ -76,7 +76,7 @@ public class QuizServiceImpl implements QuizService {
 		else
 			q= quizRepo.findByTitleIgnoreCaseContaining(searchKey, pageable);
 		
-		return q.getContent();
+		return q;
 	}
 
 	@Override

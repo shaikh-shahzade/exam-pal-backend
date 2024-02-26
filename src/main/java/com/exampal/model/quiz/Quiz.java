@@ -1,10 +1,12 @@
-package com.exampal.model;
+package com.exampal.model.quiz;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import org.hibernate.annotations.GeneratorType;
 import org.hibernate.id.factory.spi.GenerationTypeStrategy;
+
+import com.exampal.model.User;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

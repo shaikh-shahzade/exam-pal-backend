@@ -1,5 +1,6 @@
-package com.exampal.model;
+package com.exampal.model.quiz;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
@@ -24,6 +25,7 @@ public class QuizAttempt {
 	private Date date;
 	private int marks;
 	private int questionsAttempted;
-	private int attemptTime;
+	private LocalDateTime startTime;
+	private LocalDateTime endTime;
 	private String status;
 }
