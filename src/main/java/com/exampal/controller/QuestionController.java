@@ -2,6 +2,7 @@ package com.exampal.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,23 +13,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.exampal.model.quiz.Question;
+import com.exampal.service.QuestionService;
 
 @RestController
 @RequestMapping("question")
 public class QuestionController {
-
+	@Autowired
+	private QuestionService questionService;
+	
 	@GetMapping("quiz/{quizId}")
-	public List<Question> getQuestionByQuiz(@PathVariable Long quizId)
+	public List<Question> getQuestionsByQuiz(@PathVariable Long quizId)
 	{
-		return null;
+		return questionService.getQuestionsByQuizId(quizId);
 	}
-	@PostMapping()
-	public List<Question> createQuestions(@RequestBody List<Question> questions)
+	@PostMapping("quiz/{quizId}")
+	public List<Question> createQuestions(
+			@RequestBody List<Question> questions,
+			@PathVariable Long quizId
+			)
 	{
-		return null;
+		return questionService.createQuestions(questions,quizId);
 	}
-	@PutMapping()
-	public List<Question> updateQuestions(@RequestBody List<Question> questions)
+	@PutMapping("quiz/{quizId}")
+	public List<Question> updateQuestions(
+			@RequestBody List<Question> questions,
+			@PathVariable Long quizId
+			)
 	{
 		return null;
 	}
