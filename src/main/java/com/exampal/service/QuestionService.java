@@ -9,4 +9,6 @@ public interface QuestionService {
 	public List<Question> getQuestionsByQuizId(Long quizId);
 
 	public List<Question> createQuestions(List<Question> questions, Long quizId);
+
+	public List<Question> updateQuestions(List<Question> questions, Long quizId);
 }

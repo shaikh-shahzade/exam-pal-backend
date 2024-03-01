@@ -36,4 +36,13 @@ public class QuestionServiceImpl implements QuestionService{
 		return questions;
 	}
 
+	@Override
+	public List<Question> updateQuestions(List<Question> questions, Long quizId) {
+		// TODO Auto-generated method stub
+		Quiz quiz = quizRepository.findById(quizId).orElse(null);
+		List<Question> q = questionRepository.saveAll(questions);
+		
+		return q;
+	}
+
 }

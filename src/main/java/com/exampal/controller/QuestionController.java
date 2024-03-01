@@ -40,7 +40,7 @@ public class QuestionController {
 			@PathVariable Long quizId
 			)
 	{
-		return null;
+		return questionService.updateQuestions(questions , quizId);
 	}
 	@DeleteMapping("{id}")
 	public List<Question> deleteQuestions(@PathVariable Long id)
