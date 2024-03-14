@@ -11,7 +11,7 @@ public interface QuizService {
 
 	public Quiz createQuiz(Quiz quiz, String username);
 	
-	public Page<Quiz> getAllQuiz(Integer page, Integer count, String sortBy, String sorting, String searchKey);
+	public List<Quiz> getAllQuiz(Integer page, Integer count, String sortBy, String sorting, String searchKey);
 	
 	public Quiz getQuizById(Long qid);
 	

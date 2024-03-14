@@ -35,7 +35,7 @@ public class QuizController {
 	
 	
 	@GetMapping("list")
-	public	Page<Quiz> getAllQuiz(
+	public	List<Quiz> getAllQuiz(
 			@RequestParam(name = "page" , defaultValue = "0" ) Integer page,
 			@RequestParam(name = "count" , defaultValue = "10") Integer count,
 			@RequestParam(name = "sortBy" , defaultValue = "qid") String sortBy,

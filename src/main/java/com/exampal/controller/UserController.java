@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.exampal.model.Role;
@@ -40,13 +41,18 @@ public class UserController {
 	}
 
 	@PostMapping("")
-	public User createUser(@RequestBody User user) throws Exception {
+	public User createUser(
+			@RequestBody User user,  
+			@RequestParam(required = true) boolean isHostAccount) throws Exception {
+		
+		System.out.println(isHostAccount);
 		Set<UserRole> userRoles = new HashSet<UserRole>();
 		UserRole userRole = new UserRole();
 
 		Role role = new Role();
 		role.setId(11L);
 		role.setRole("normal-user");
+		
 		userRole.setRole(role);
 		userRole.setUser(user);
 		userRoles.add(userRole);

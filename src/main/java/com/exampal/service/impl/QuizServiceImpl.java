@@ -61,7 +61,7 @@ public class QuizServiceImpl implements QuizService {
 	}
 
 	@Override
-	public Page<Quiz> getAllQuiz(
+	public List<Quiz> getAllQuiz(
 			Integer page, 
 			Integer count, 
 			String sortBy, 
@@ -76,7 +76,7 @@ public class QuizServiceImpl implements QuizService {
 		else
 			q= quizRepo.findByTitleIgnoreCaseContaining(searchKey, pageable);
 		
-		return q;
+		return q.toList();
 	}
 
 	@Override
