@@ -12,7 +12,7 @@ import com.exampal.model.UserRole;
 
 public interface UserService {
 	
-	public User createUser(User user , Set<UserRole> UserRoles) throws Exception;
+	public User createUser(User user ,Boolean isHostAccount) throws Exception;
 	
 	public List<User> getAllUser();
 	

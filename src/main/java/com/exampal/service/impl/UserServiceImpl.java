@@ -1,5 +1,7 @@
 package com.exampal.service.impl;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.exampal.exception.ResourceNotFoundException;
+import com.exampal.model.Role;
 import com.exampal.model.User;
 import com.exampal.model.UserRole;
 import com.exampal.repo.RoleRepository;
@@ -21,20 +24,34 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private RoleRepository roleRepository;
 	
+	
 	@Override
-	public User createUser(User user, Set<UserRole> userRoles) throws Exception {
+	public User createUser(User user,Boolean isHostAccount) throws Exception {
 
 		User localUser = this.userRepository.findUserByUsername(user.getUsername());
 		if(localUser!=null)
 			throw new Exception("User Already exists");
 		
-		for(UserRole userRole:userRoles)
+		UserRole userRole = new UserRole();
+		Role role;
+		if(isHostAccount)
 		{
-			this.roleRepository.save(userRole.getRole());
+			role = new Role();
+			role.setId(22L);
+			role.setRole("admin");
 		}
-		user.setUserRole(userRoles);
-		user = this.userRepository.save(user);
+		else
+		{
+			role = new Role();
+			role.setId(11L);
+			role.setRole("normal-user");
+		}
 		
+		role =this.roleRepository.save(role);
+		userRole.setUser(user);
+		userRole.setRole(role);
+		user.setUserRole(Set.of(userRole));
+		user = this.userRepository.save(user);
 		return user;
 	}
 
