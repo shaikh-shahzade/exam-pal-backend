@@ -1,5 +1,6 @@
 package com.exampal.service;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
@@ -11,7 +12,7 @@ public interface QuizService {
 
 	public Quiz createQuiz(Quiz quiz, String username);
 	
-	public List<Quiz> getAllQuiz(Integer page, Integer count, String sortBy, String sorting, String searchKey);
+	public List<Quiz> getAllQuiz(Integer page, Integer count, String sortBy, String sorting, String searchKey, Boolean host, Principal principal);
 	
 	public Quiz getQuizById(Long qid);
 	

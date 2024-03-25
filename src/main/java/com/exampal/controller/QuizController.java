@@ -40,11 +40,12 @@ public class QuizController {
 			@RequestParam(name = "count" , defaultValue = "10") Integer count,
 			@RequestParam(name = "sortBy" , defaultValue = "qid") String sortBy,
 			@RequestParam(name = "sorting" , defaultValue = "ASC") String sorting,
-			@RequestParam(name="search" , defaultValue = "") String searchKey
-			
+			@RequestParam(name="search" , defaultValue = "") String searchKey,
+			@RequestParam(name="host" ,defaultValue="false") Boolean host,
+			Principal principal
 			)
 	{
-		return quizService.getAllQuiz(page,count,sortBy,sorting,searchKey);
+		return quizService.getAllQuiz(page,count,sortBy,sorting,searchKey,host,principal);
 	}
 	
 	@GetMapping("{id}")
@@ -71,4 +72,5 @@ public class QuizController {
 	{
 		return quizService.deleteQuiz(id);
 	}
+	
 }

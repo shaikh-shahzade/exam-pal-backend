@@ -1,5 +1,6 @@
 package com.exampal.service.impl;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,11 @@ import org.springframework.stereotype.Service;
 
 import com.exampal.exception.ResourceNotFoundException;
 import com.exampal.model.User;
+import com.exampal.model.quiz.Answer;
 import com.exampal.model.quiz.Category;
 import com.exampal.model.quiz.Question;
 import com.exampal.model.quiz.Quiz;
+import com.exampal.repo.AnswerRepository;
 import com.exampal.repo.CategoryRepository;
 import com.exampal.repo.QuestionRepository;
 import com.exampal.repo.QuizRepository;
@@ -34,6 +37,9 @@ public class QuizServiceImpl implements QuizService {
 	QuestionRepository questionRepo;
 	
 	@Autowired
+	AnswerRepository answerRepo;
+	
+	@Autowired
 	CategoryRepository catRepository;
 	
 	@Override
@@ -42,20 +48,6 @@ public class QuizServiceImpl implements QuizService {
 		User user = userRepo.findUserByUsername(username);
 		
 		quiz.setUser(user);
-		List<Question> questions;
-		if(quiz.getQuestion()!=null)
-		{
-			questions= questionRepo.saveAll(quiz.getQuestion());
-			quiz.setQuestion(questions);
-
-		}
-		
-		Category cat = quiz.getCategory();
-		if(cat!=null&&(cat.getCid()==null||!catRepository.existsById(cat.getCid())))
-				cat = catRepository.save(cat);
-		
-		quiz.setCategory(cat);
-		
 		Quiz q = quizRepo.save(quiz);
 		return q;
 	}
@@ -66,17 +58,33 @@ public class QuizServiceImpl implements QuizService {
 			Integer count, 
 			String sortBy, 
 			String sorting,
-			String searchKey) {
+			String searchKey, 
+			Boolean host, 
+			Principal principal) {
 		// TODO Auto-generated method stub
 		Pageable pageable = PageRequest.of(page, count, Sort.by(Direction.fromString(sorting), sortBy));
 		
-		Page<Quiz> q;
-		if(searchKey.isEmpty())
-		q = quizRepo.findAll(pageable);
+		Page<Quiz> q=null;
+		if(host&&principal!=null)
+		{
+			User user = userRepo.findUserByUsername(principal.getName());
+			if(searchKey.isEmpty())
+				q = quizRepo.findAllByUser(pageable,user);
+				else
+				q= quizRepo.findByTitleIgnoreCaseContainingAndUser(searchKey, pageable,user);
+				
+		}
 		else
-			q= quizRepo.findByTitleIgnoreCaseContaining(searchKey, pageable);
+		if(!host)
+		{
+			if(searchKey.isEmpty())
+				q = quizRepo.findAll(pageable);
+				else
+					q= quizRepo.findByTitleIgnoreCaseContaining(searchKey, pageable);
+				
+		}
 		
-		return q.toList();
+		return q!=null?q.toList():null;
 	}
 
 	@Override
@@ -96,8 +104,24 @@ public class QuizServiceImpl implements QuizService {
 		q.setMaxTime(quiz.getMaxTime());
 		q.setNoOfQuestions(quiz.getNoOfQuestions());
 		q.setTitle(quiz.getTitle());
+		q.setLastDate(quiz.getLastDate());
+		q.setStartDate(quiz.getStartDate());
+		q.setCategory(quiz.getCategory());
+		List<Question> questions;
 		
+		
+			for(Question q2 :quiz.getQuestion())
+			{
+				q2.setQuiz(q);
+				for(Answer a :q2.getAnswers())
+				 a.setQuestion(q2);
+			
+				q2.setAnswers( q2.getAnswers());
+			}
+			
+		q.setQuestion(quiz.getQuestion());
 		q = quizRepo.save(q);
+		
 		return q;
 	}
 
