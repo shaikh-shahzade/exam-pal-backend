@@ -1,5 +1,6 @@
 package com.exampal.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -52,7 +53,7 @@ public class User implements UserDetails {
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore
-	private List<Quiz> quizes ; 
+	private List<Quiz> quizes = new ArrayList<Quiz>() ; 
 	//Security Methods
 	
 	

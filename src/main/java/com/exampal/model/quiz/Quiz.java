@@ -1,12 +1,15 @@
 package com.exampal.model.quiz;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.GeneratorType;
 import org.hibernate.id.factory.spi.GenerationTypeStrategy;
 
 import com.exampal.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -25,7 +28,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Quiz")
+@Table(name = "quiz")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -42,16 +45,19 @@ public class Quiz {
 	private int maxMarks;
 	private int noOfQuestions;
 	private int maxTime;
-	private LocalDate lastDate;
-	private LocalDate startDate;
+	@Column(name = "lastDate", columnDefinition = "TIMESTAMP")
+	private LocalDateTime lastDate;
+	@Column(name = "startDate", columnDefinition = "TIMESTAMP")
+	private LocalDateTime startDate;
 	private String difficulty;
 	
 	
 	@ManyToOne()
+	@JsonIgnore
 	private User user;
 	
-	@OneToMany(mappedBy = "quiz" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Question> question;
+	@OneToMany(mappedBy = "quiz" ,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Question> question = new ArrayList<Question>();
 	
 	@ManyToOne()
 	private Category category;
