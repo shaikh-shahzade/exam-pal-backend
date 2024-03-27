@@ -26,4 +26,5 @@ public class QuizAttempt {
 	private LocalDateTime startTime;
 	private LocalDateTime endTime;
 	private String status;
+	
 }
