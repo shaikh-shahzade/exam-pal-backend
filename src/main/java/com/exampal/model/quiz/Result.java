@@ -1,8 +1,5 @@
 package com.exampal.model.quiz;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,13 +14,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class QuizAttempt {
+public class Result {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	private Date date;
-	private LocalDateTime startTime;
-	private LocalDateTime endTime;
-	private String status;
+	private Long resId;
+	private Integer marks;
+	private Integer questionsAttempted;
+	private Integer correctAnswers;
+	private Integer timeTaken;
 }
