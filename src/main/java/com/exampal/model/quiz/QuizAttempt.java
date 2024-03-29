@@ -2,6 +2,7 @@ package com.exampal.model.quiz;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -29,6 +30,7 @@ public class QuizAttempt {
 	private LocalDateTime startTime;
 	private LocalDateTime endTime;
 	private String status;
+	
 	
 	@OneToOne()
 	private Result result;
