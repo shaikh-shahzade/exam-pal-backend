@@ -6,5 +6,5 @@ import com.exampal.model.quiz.QuizAttempt;
 
 public interface QuizAttemptService {
 
-	public QuizAttempt createAttempt(QuizAttempt quizAttempt, Principal principal);
+	public QuizAttempt createAttempt(QuizAttempt quizAttempt, Long quizId, Principal principal);
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,9 +22,12 @@ public class AttemptController {
 	private QuizAttemptService quizAttemptService;
 	
 	@PostMapping("")
-	public QuizAttempt createAttempt(@RequestBody QuizAttempt quizAttempt, Principal principal)
+	public QuizAttempt createAttempt(
+			@RequestBody QuizAttempt quizAttempt,
+			@RequestHeader Long quizId,			
+			Principal principal)
 	{
-		return quizAttemptService.createAttempt(quizAttempt,principal);
+		return quizAttemptService.createAttempt(quizAttempt, quizId, principal);
 	}
 
 }

@@ -63,5 +63,7 @@ public class Quiz {
 	private Category category;
 	//private int cid;
 	
+	@OneToMany(mappedBy = "quiz" ,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<QuizAttempt> quizAttempt = new ArrayList<QuizAttempt>();
 	
 }
