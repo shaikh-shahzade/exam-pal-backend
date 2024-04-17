@@ -14,20 +14,19 @@ import com.exampal.model.quiz.QuizAttempt;
 import com.exampal.service.QuizAttemptService;
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping("attempt")
+@CrossOrigin("*")
 public class AttemptController {
 	
 	@Autowired
 	private QuizAttemptService quizAttemptService;
 	
-	@PostMapping("")
+	@PostMapping
 	public QuizAttempt createAttempt(
-			@RequestBody QuizAttempt quizAttempt,
 			@RequestHeader Long quizId,			
 			Principal principal)
 	{
-		return quizAttemptService.createAttempt(quizAttempt, quizId, principal);
+		return quizAttemptService.createAttempt(quizId, principal);
 	}
 
 }

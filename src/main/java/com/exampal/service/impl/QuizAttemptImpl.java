@@ -1,6 +1,9 @@
 package com.exampal.service.impl;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,10 +24,18 @@ public class QuizAttemptImpl implements QuizAttemptService{
 	private QuizRepository quizRepository;
 	
 	@Override
-	public QuizAttempt createAttempt(QuizAttempt quizAttempt, Long quizId, Principal principal) {
+	public QuizAttempt createAttempt(Long quizId, Principal principal) {
 		// TODO Auto-generated method stub
 		Quiz quiz = quizRepository.findById(quizId).get();
-		quizAttempt.setQuiz(quiz);
+		QuizAttempt quizAttempt = QuizAttempt
+				.builder()
+				.quiz(quiz)
+				.status("Started")
+				.startTime(LocalDateTime.now())
+				.date(LocalDate.now())
+				.build();
+		
+		
 		return attemptRepository.save(quizAttempt);
 	}
 
