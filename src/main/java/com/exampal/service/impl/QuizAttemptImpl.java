@@ -16,8 +16,10 @@ import com.exampal.exception.ResourceNotFoundException;
 import com.exampal.model.quiz.AttemptedQuestion;
 import com.exampal.model.quiz.Quiz;
 import com.exampal.model.quiz.QuizAttempt;
+import com.exampal.repo.AttemptedQuestionRepo;
 import com.exampal.repo.QuizAttemptRepository;
 import com.exampal.repo.QuizRepository;
+import com.exampal.repo.ResultRepo;
 import com.exampal.service.QuizAttemptService;
 
 @Service
@@ -28,7 +30,12 @@ public class QuizAttemptImpl implements QuizAttemptService {
 
 	@Autowired
 	private QuizRepository quizRepository;
+	
+	@Autowired
+	private AttemptedQuestionRepo attemptedQuestionRepo;
 
+	@Autowired
+	private ResultRepo resultRepo;
 	@Override
 	public QuizAttempt createAttempt(Long quizId, Principal principal) {
 		// TODO Auto-generated method stub
@@ -47,12 +54,18 @@ public class QuizAttemptImpl implements QuizAttemptService {
 		quizAttempt_retrieved.setEndTime(LocalDateTime.now());
 
 		List<AttemptedQuestion> attemptedQuestions = quizAttempt.getResult().getAttemptedQuestion();
-
-		attemptedQuestions = attemptedQuestions.stream().map(atemptQ -> {
+		
+		int marks = 0;
+		
+		
+		
+		attemptedQuestions = attemptedQuestions.stream().map(attemptQ-> {
 			// save and map each question
-			return atemptQ;
+			attemptQ.setIsCorrect(attemptQ.getAnswer().getIsCorrect());
+			attemptedQuestionRepo.save(attemptQ);
+			return attemptQ;
 		}).collect(Collectors.toList());
-
+		
 		return null;
 	}
 
