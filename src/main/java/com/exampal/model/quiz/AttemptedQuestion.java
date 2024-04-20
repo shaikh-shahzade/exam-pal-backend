@@ -1,5 +1,9 @@
 package com.exampal.model.quiz;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,7 +25,8 @@ public class AttemptedQuestion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	private Boolean isCorrect;
+
+	private Boolean isCorrect = false;
 
 	@ManyToOne()
 	private Question question;

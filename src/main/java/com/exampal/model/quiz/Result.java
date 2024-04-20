@@ -2,6 +2,8 @@ package com.exampal.model.quiz;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -34,5 +36,6 @@ public class Result {
 	private List<AttemptedQuestion> attemptedQuestion;
 	
 	@OneToOne(mappedBy = "result",cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+	@JsonIgnore
 	private QuizAttempt attempt;
 }

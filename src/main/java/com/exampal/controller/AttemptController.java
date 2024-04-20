@@ -29,7 +29,7 @@ public class AttemptController {
 		return quizAttemptService.createAttempt(quizId, principal);
 	}
 	
-	@PostMapping
+	@PostMapping("submit")
 	public QuizAttempt submitQuizAndEvaluate(
 			@RequestBody QuizAttempt quizAttempt,
 			Principal principal

@@ -13,10 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.exampal.exception.ResourceNotFoundException;
+import com.exampal.model.quiz.Answer;
 import com.exampal.model.quiz.AttemptedQuestion;
 import com.exampal.model.quiz.Quiz;
 import com.exampal.model.quiz.QuizAttempt;
+import com.exampal.model.quiz.Result;
+import com.exampal.repo.AnswerRepository;
 import com.exampal.repo.AttemptedQuestionRepo;
+import com.exampal.repo.QuestionRepository;
 import com.exampal.repo.QuizAttemptRepository;
 import com.exampal.repo.QuizRepository;
 import com.exampal.repo.ResultRepo;
@@ -36,6 +40,13 @@ public class QuizAttemptImpl implements QuizAttemptService {
 
 	@Autowired
 	private ResultRepo resultRepo;
+	
+	@Autowired
+	private QuestionRepository questionRepository;
+	
+	@Autowired
+	private AnswerRepository answerRepository;
+	
 	@Override
 	public QuizAttempt createAttempt(Long quizId, Principal principal) {
 		// TODO Auto-generated method stub
@@ -53,17 +64,29 @@ public class QuizAttemptImpl implements QuizAttemptService {
 				() -> new ResourceNotFoundException(QuizAttempt.class.toString(), "id", quizAttempt.getId()));
 		quizAttempt_retrieved.setEndTime(LocalDateTime.now());
 
-		List<AttemptedQuestion> attemptedQuestions = quizAttempt.getResult().getAttemptedQuestion();
+		
+		Result result = quizAttempt.getResult();
+		
+		List<AttemptedQuestion> attemptedQuestions = result.getAttemptedQuestion();
 		
 		int marks = 0;
 		
-		
-		
 		attemptedQuestions = attemptedQuestions.stream().map(attemptQ-> {
 			// save and map each question
-			attemptQ.setIsCorrect(attemptQ.getAnswer().getIsCorrect());
-			attemptedQuestionRepo.save(attemptQ);
-			return attemptQ;
+			
+			Answer answer = answerRepository
+					.findById(attemptQ.getAnswer().getId()).orElseThrow();
+			
+			attemptQ.setIsCorrect(answer.getIsCorrect());
+			
+			attemptQ.setQuestion(
+			questionRepository
+			.findById(attemptQ.getQuestion().getQuesid()).orElseThrow()
+			);
+			
+			attemptQ.setAnswer(answer);
+			
+			return attemptedQuestionRepo.save(attemptQ);
 		}).collect(Collectors.toList());
 		
 		return null;
