@@ -1,5 +1,6 @@
 package com.exampal.model.quiz;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -30,10 +31,10 @@ public class Result {
 	private Integer marks;
 	private Integer TotalAttempted;
 	private Integer correctAnswers;
-	private Integer timeTaken;
+	private Long timeTaken;
 	
-	@OneToMany(mappedBy = "result" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
-	private List<AttemptedQuestion> attemptedQuestion;
+	@OneToMany(mappedBy = "result" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+	private List<AttemptedQuestion> attemptedQuestion = new  ArrayList<AttemptedQuestion>();
 	
 	@OneToOne(mappedBy = "result",cascade = CascadeType.ALL , fetch = FetchType.EAGER)
 	@JsonIgnore

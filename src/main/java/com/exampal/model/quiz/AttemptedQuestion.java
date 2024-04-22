@@ -3,8 +3,12 @@ package com.exampal.model.quiz;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,13 +32,14 @@ public class AttemptedQuestion {
 
 	private Boolean isCorrect = false;
 
-	@ManyToOne()
+	@ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.EAGER )
 	private Question question;
 	
 	@ManyToOne()
 	private Answer answer;
 	
-	@ManyToOne()
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonIgnore
 	private Result result;
 	
 }

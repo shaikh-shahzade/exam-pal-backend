@@ -43,6 +43,7 @@ public class Question {
 	private List<Answer> answers = new ArrayList<Answer>();
 	
 	@OneToMany(mappedBy = "question" , fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<AttemptedQuestion> attemptedQuestions = new ArrayList<AttemptedQuestion>();
 	
 	

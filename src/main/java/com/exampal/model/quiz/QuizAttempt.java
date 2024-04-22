@@ -38,7 +38,7 @@ public class QuizAttempt {
 	private String status;
 	
 	
-	@OneToOne()
+	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	private Result result;
 	
 	@ManyToOne()

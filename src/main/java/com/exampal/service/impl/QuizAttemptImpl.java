@@ -3,6 +3,10 @@ package com.exampal.service.impl;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalUnit;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -51,8 +55,16 @@ public class QuizAttemptImpl implements QuizAttemptService {
 	public QuizAttempt createAttempt(Long quizId, Principal principal) {
 		// TODO Auto-generated method stub
 		Quiz quiz = quizRepository.findById(quizId).get();
-		QuizAttempt quizAttempt = QuizAttempt.builder().quiz(quiz).status("Started").startTime(LocalDateTime.now())
-				.date(LocalDate.now()).build();
+		LocalDateTime startTime =  LocalDateTime.now();
+		LocalDateTime endDateTime = startTime.plusMinutes(60);
+		QuizAttempt quizAttempt = QuizAttempt
+				.builder()
+				.quiz(quiz)
+				.status("Started")
+				.startTime(startTime)
+				.endTime(endDateTime)
+				.date(LocalDate.now())
+				.build();
 
 		return attemptRepository.save(quizAttempt);
 	}
@@ -60,22 +72,22 @@ public class QuizAttemptImpl implements QuizAttemptService {
 	@Override
 	public QuizAttempt submitQuizAndEvaluate(QuizAttempt quizAttempt, Principal principal) {
 		// TODO Auto-generated method stub
-		QuizAttempt quizAttempt_retrieved = this.attemptRepository.findById(quizAttempt.getId()).orElseThrow(
-				() -> new ResourceNotFoundException(QuizAttempt.class.toString(), "id", quizAttempt.getId()));
-		quizAttempt_retrieved.setEndTime(LocalDateTime.now());
-
+		long id = quizAttempt.getId();
+		QuizAttempt quizAttempt_retrieved = this.attemptRepository.findById(id).orElseThrow(
+				() -> new ResourceNotFoundException(QuizAttempt.class.toString(), "id", id));
+		
+		quizAttempt_retrieved.setStatus("Completed");
 		
 		Result result = quizAttempt.getResult();
 		
 		List<AttemptedQuestion> attemptedQuestions = result.getAttemptedQuestion();
 		
-		int marks = 0;
 		
 		attemptedQuestions = attemptedQuestions.stream().map(attemptQ-> {
 			// save and map each question
-			
 			Answer answer = answerRepository
 					.findById(attemptQ.getAnswer().getId()).orElseThrow();
+			attemptQ.setAnswer(answer);
 			
 			attemptQ.setIsCorrect(answer.getIsCorrect());
 			
@@ -84,12 +96,35 @@ public class QuizAttemptImpl implements QuizAttemptService {
 			.findById(attemptQ.getQuestion().getQuesid()).orElseThrow()
 			);
 			
-			attemptQ.setAnswer(answer);
+			attemptQ.setResult(result);
 			
-			return attemptedQuestionRepo.save(attemptQ);
+			return attemptQ;
 		}).collect(Collectors.toList());
 		
-		return null;
+		int marks = 0;
+		int totalAttempted=attemptedQuestions.size();
+		int correctAttempts=0;
+		
+		for(AttemptedQuestion at:attemptedQuestions)
+			if(at.getIsCorrect())
+				{
+					marks+=10;
+					correctAttempts+=1;
+				}
+				
+		result.setCorrectAnswers(correctAttempts);
+		result.setMarks(marks);
+		
+		result.setTimeTaken(ChronoUnit.MINUTES.between(quizAttempt_retrieved.getStartTime(), quizAttempt_retrieved.getEndTime()));
+		result.setTotalAttempted(totalAttempted);
+		
+		result.setAttemptedQuestion(attemptedQuestions);
+		//resultRepo.save(result);
+		quizAttempt_retrieved.setResult(result);
+		
+		
+		return attemptRepository.save(quizAttempt_retrieved);
 	}
+	
 
 }
