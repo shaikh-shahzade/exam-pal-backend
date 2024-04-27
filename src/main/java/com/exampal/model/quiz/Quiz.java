@@ -66,4 +66,8 @@ public class Quiz {
 	@OneToMany(mappedBy = "quiz" ,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<QuizAttempt> quizAttempt = new ArrayList<QuizAttempt>();
 	
+	@OneToMany(mappedBy = "quiz" ,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<Result> result = new ArrayList<Result>();
+	
 }

@@ -51,6 +51,7 @@ public class QuizAttemptImpl implements QuizAttemptService {
 	@Autowired
 	private AnswerRepository answerRepository;
 	
+	
 	@Override
 	public QuizAttempt createAttempt(Long quizId, Principal principal) {
 		// TODO Auto-generated method stub
@@ -124,6 +125,12 @@ public class QuizAttemptImpl implements QuizAttemptService {
 		
 		
 		return attemptRepository.save(quizAttempt_retrieved);
+	}
+
+	@Override
+	public Result getResultById(Long id) {
+		// TODO Auto-generated method stub
+		return resultRepo.findById(id).orElseThrow(()->new ResourceNotFoundException(this.getClass().toString(), Result.class.toString(), id));
 	}
 	
 
