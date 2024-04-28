@@ -107,12 +107,12 @@ public class QuizAttemptImpl implements QuizAttemptService {
 		int correctAttempts=0;
 		
 		for(AttemptedQuestion at:attemptedQuestions)
-			if(at.getIsCorrect())
+			if( at.getIsCorrect()!=null &&at.getIsCorrect()==true)
 				{
 					marks+=10;
 					correctAttempts+=1;
 				}
-				
+		//result.setQuiz(quizAttempt_retrieved.getQuiz());		
 		result.setCorrectAnswers(correctAttempts);
 		result.setMarks(marks);
 		
@@ -128,9 +128,9 @@ public class QuizAttemptImpl implements QuizAttemptService {
 	}
 
 	@Override
-	public Result getResultById(Long id) {
+	public QuizAttempt getResultById(Long id) {
 		// TODO Auto-generated method stub
-		return resultRepo.findById(id).orElseThrow(()->new ResourceNotFoundException(this.getClass().toString(), Result.class.toString(), id));
+		return this.attemptRepository.findById(id).orElseThrow(()->new ResourceNotFoundException(this.getClass().toString(), Result.class.toString(), id));
 	}
 	
 

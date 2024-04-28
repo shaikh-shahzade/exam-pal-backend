@@ -44,7 +44,7 @@ public class AttemptController {
 	
 	
 	@GetMapping("result/{id}")
-	public Result getResult(@PathVariable Long id)
+	public QuizAttempt getResult(@PathVariable Long id)
 	{
 		return  quizAttemptService.getResultById(id);
 	}

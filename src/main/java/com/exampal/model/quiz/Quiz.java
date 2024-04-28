@@ -64,10 +64,8 @@ public class Quiz {
 	//private int cid;
 	
 	@OneToMany(mappedBy = "quiz" ,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<QuizAttempt> quizAttempt = new ArrayList<QuizAttempt>();
 	
-	@OneToMany(mappedBy = "quiz" ,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonIgnore
-	private List<Result> result = new ArrayList<Result>();
 	
 }

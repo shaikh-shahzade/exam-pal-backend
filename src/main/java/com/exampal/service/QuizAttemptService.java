@@ -11,5 +11,5 @@ public interface QuizAttemptService {
 
 	public QuizAttempt submitQuizAndEvaluate(QuizAttempt quizAttempt, Principal principal);
 
-	public Result getResultById(Long id);
+	public QuizAttempt getResultById(Long id);
 }

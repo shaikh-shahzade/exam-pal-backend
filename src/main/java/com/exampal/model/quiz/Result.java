@@ -41,6 +41,4 @@ public class Result {
 	@JsonIgnore
 	private QuizAttempt attempt;
 	
-	@ManyToOne()
-	private Quiz quiz;
 }
