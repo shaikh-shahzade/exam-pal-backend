@@ -132,6 +132,16 @@ public class QuizAttemptImpl implements QuizAttemptService {
 		// TODO Auto-generated method stub
 		return this.attemptRepository.findById(id).orElseThrow(()->new ResourceNotFoundException(this.getClass().toString(), Result.class.toString(), id));
 	}
+
+	@Override
+	public List<QuizAttempt> getResultsByQuiz(Long id) {
+		// TODO Auto-generated method stub
+		Quiz quiz = this.quizRepository.findById(id).orElseThrow(()->new ResourceNotFoundException(this.getClass().toString(), Quiz.class.toString(), id));
+		if(quiz==null) return null;
+		return this.attemptRepository.findByQuiz(quiz);
+	}
+	
+	
 	
 
 }

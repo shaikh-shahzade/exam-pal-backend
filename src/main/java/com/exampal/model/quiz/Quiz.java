@@ -43,6 +43,7 @@ public class Quiz {
 	@Column(length = 99999999)
 	private String description;
 	private int maxMarks;
+	private int passingMarks;
 	private int noOfQuestions;
 	private int maxTime;
 	@Column(name = "lastDate", columnDefinition = "TIMESTAMP")

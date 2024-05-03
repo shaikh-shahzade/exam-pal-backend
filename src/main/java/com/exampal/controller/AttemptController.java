@@ -1,6 +1,7 @@
 package com.exampal.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -47,6 +48,12 @@ public class AttemptController {
 	public QuizAttempt getResult(@PathVariable Long id)
 	{
 		return  quizAttemptService.getResultById(id);
+	}
+	
+	@GetMapping("{id}/results")
+	public List<QuizAttempt> getResultByQuiz(@PathVariable Long id)
+	{
+		return  quizAttemptService.getResultsByQuiz(id);
 	}
 
 }
