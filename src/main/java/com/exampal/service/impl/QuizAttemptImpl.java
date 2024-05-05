@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.exampal.exception.ResourceNotFoundException;
+import com.exampal.model.User;
 import com.exampal.model.quiz.Answer;
 import com.exampal.model.quiz.AttemptedQuestion;
 import com.exampal.model.quiz.Quiz;
@@ -28,6 +29,7 @@ import com.exampal.repo.QuestionRepository;
 import com.exampal.repo.QuizAttemptRepository;
 import com.exampal.repo.QuizRepository;
 import com.exampal.repo.ResultRepo;
+import com.exampal.repo.UserRepository;
 import com.exampal.service.QuizAttemptService;
 
 @Service
@@ -51,11 +53,15 @@ public class QuizAttemptImpl implements QuizAttemptService {
 	@Autowired
 	private AnswerRepository answerRepository;
 	
+	@Autowired
+	private UserRepository userRepository;
+	
 	
 	@Override
 	public QuizAttempt createAttempt(Long quizId, Principal principal) {
 		// TODO Auto-generated method stub
 		Quiz quiz = quizRepository.findById(quizId).get();
+		User user = userRepository.findUserByUsername(principal.getName());
 		LocalDateTime startTime =  LocalDateTime.now();
 		LocalDateTime endDateTime = startTime.plusMinutes(60);
 		QuizAttempt quizAttempt = QuizAttempt
@@ -65,6 +71,7 @@ public class QuizAttemptImpl implements QuizAttemptService {
 				.startTime(startTime)
 				.endTime(endDateTime)
 				.date(LocalDate.now())
+				.user(user)
 				.build();
 
 		return attemptRepository.save(quizAttempt);

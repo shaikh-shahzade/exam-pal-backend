@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.exampal.model.quiz.Quiz;
+import com.exampal.model.quiz.QuizAttempt;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -54,10 +55,18 @@ public class User implements UserDetails {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Quiz> quizes = new ArrayList<Quiz>() ; 
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<QuizAttempt> quizAttempt = new ArrayList<QuizAttempt>() ;
+	
+	
 	//Security Methods
 	
 	
+	
 	@Override
+	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
 		Set<Authority> authority = new HashSet<Authority>();

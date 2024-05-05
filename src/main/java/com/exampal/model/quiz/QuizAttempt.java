@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
+import com.exampal.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -40,6 +41,9 @@ public class QuizAttempt {
 	
 	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	private Result result;
+	
+	@ManyToOne()
+	private User user;
 	
 	@ManyToOne()
 	private Quiz quiz;

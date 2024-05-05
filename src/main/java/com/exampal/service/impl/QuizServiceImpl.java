@@ -107,6 +107,7 @@ public class QuizServiceImpl implements QuizService {
 		q.setLastDate(quiz.getLastDate());
 		q.setStartDate(quiz.getStartDate());
 		q.setCategory(quiz.getCategory());
+		q.setPassingMarks(quiz.getPassingMarks());
 		List<Question> questions;
 		
 		
