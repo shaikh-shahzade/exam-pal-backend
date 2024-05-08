@@ -15,4 +15,6 @@ public interface QuizAttemptService {
 	public QuizAttempt getResultById(Long id);
 
 	public List<QuizAttempt> getResultsByQuiz(Long id);
+
+	public List<QuizAttempt> getResultsByHost(Principal principal);
 }

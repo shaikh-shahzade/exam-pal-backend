@@ -147,6 +147,15 @@ public class QuizAttemptImpl implements QuizAttemptService {
 		if(quiz==null) return null;
 		return this.attemptRepository.findByQuiz(quiz);
 	}
+
+	@Override
+	public List<QuizAttempt> getResultsByHost(Principal principal) {
+		// TODO Auto-generated method stub
+		User user = this.userRepository.findUserByUsername(principal.getName());
+		List<QuizAttempt> ls = this.attemptRepository.findByHost(user.getId());
+		return ls; 
+
+	}
 	
 	
 	

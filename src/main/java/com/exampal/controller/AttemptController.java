@@ -55,5 +55,10 @@ public class AttemptController {
 	{
 		return  quizAttemptService.getResultsByQuiz(id);
 	}
-
+	
+	@GetMapping("host/results")
+	public List<QuizAttempt> getResultByHost(Principal principal)
+	{
+		return  quizAttemptService.getResultsByHost(principal);
+	}
 }

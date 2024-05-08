@@ -34,7 +34,7 @@ public class Result {
 	private Integer correctAnswers;
 	private Long timeTaken;
 	
-	@OneToMany(mappedBy = "result" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "result" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
 	private List<AttemptedQuestion> attemptedQuestion = new  ArrayList<AttemptedQuestion>();
 	
 	@OneToOne(mappedBy = "result",cascade = CascadeType.ALL , fetch = FetchType.EAGER)
