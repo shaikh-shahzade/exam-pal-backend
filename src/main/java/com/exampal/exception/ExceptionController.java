@@ -16,4 +16,9 @@ public class ExceptionController {
 		return new ResponseEntity<ApiResponse>(new ApiResponse(exp.getMessage(),false) , HttpStatus.NOT_FOUND);
 	}
 	
+	@ExceptionHandler(UnuthorizedAccessException.class)
+	public ResponseEntity<ApiResponse> unAuthorisedAccess(UnuthorizedAccessException exp)
+	{
+		return new ResponseEntity<ApiResponse>(new ApiResponse(exp.getMessage(),false) , HttpStatus.NOT_FOUND);
+	}
 }

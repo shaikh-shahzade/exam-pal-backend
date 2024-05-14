@@ -18,7 +18,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
 		User user =  userRepo.findUserByUsername(username);
-		System.out.println(user.getFirstName());
 		return (UserDetails)user;
 	}
 

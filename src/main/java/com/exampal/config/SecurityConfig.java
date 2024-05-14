@@ -3,10 +3,12 @@ package com.exampal.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -27,7 +29,9 @@ public class SecurityConfig {
 	{
 		http.csrf().disable()
 		.authorizeHttpRequests()
-		.requestMatchers("**","/swagger-ui/**","/v3/api-docs/**","auth/generate","/quiz/retrieve","/public/**","/images/**","/user")
+		.requestMatchers(HttpMethod.POST ,"/user/v1")
+		.permitAll()
+		.requestMatchers("/user/v1","/swagger-ui/**","/v3/api-docs/**","auth/generate","/quiz/retrieve","/public/**","/images/**")
 		.permitAll()
 		.anyRequest()
 		.authenticated()
@@ -53,6 +57,6 @@ public class SecurityConfig {
 	 @Bean
 	 PasswordEncoder passwordEncoder()
 	 {
-		 return  NoOpPasswordEncoder.getInstance();
+		 return  new BCryptPasswordEncoder();
 	 }
 }

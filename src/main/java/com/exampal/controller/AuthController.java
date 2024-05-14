@@ -36,7 +36,6 @@ public class AuthController {
 	@PostMapping("/generate")
 	public ResponseEntity<JwtLoginResponse> getToken(@RequestBody JwtRequest jwtRequest) throws Exception {
 		// assuming request dont have token
-		System.out.println("username");
 		String username = jwtRequest.getUsername();
 		String password = jwtRequest.getPassword();
 		this.authenticate(username, password);
