@@ -1,10 +1,13 @@
 package com.exampal.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,22 +29,39 @@ public class UserController {
 	UserService userService;
 	
 	@Operation(description = "Get User by user-id")
-	@GetMapping("{id}")
-	public User getUserById(@PathVariable(name = "id") Long id) {
-		return this.userService.getUserById(id);
+	@GetMapping("v1/{id}")
+	public User getUserById(@PathVariable(name = "id") Long id, Principal principal) {
+		return this.userService.getUserById(id,principal);
 	}
 
-	@GetMapping("")
-	public List<User> getAlluser() {
+	@GetMapping("v1")
+	public List<User> getAlluser(Principal principal) {
 
-		return this.userService.getAllUser();
+		return this.userService.getAllUser(principal);
 	}
 
-	@PostMapping("")
+	@PostMapping("v1")
 	public User createUser(
 			@RequestBody User user,  
-			@RequestParam(required = true) boolean isHostAccount) throws Exception 
+			@RequestParam(defaultValue = "false") boolean isHostAccount) throws Exception 
 	{
 		return this.userService.createUser(user, isHostAccount);
 	}
+	
+	@PatchMapping("v1/{id}")
+	public User updateUser(
+			@RequestBody User user,
+			@PathVariable Long id,
+			Principal principal)
+	{
+		System.out.println("called");
+		return this.userService.updateUser(id,user,principal);
+	}
+	
+	@DeleteMapping("v1/{id}")
+	public User deleteUser(@PathVariable Long id, Principal principal)
+	{
+		return this.userService.deleteUser(id,principal);
+	}
+	
 }

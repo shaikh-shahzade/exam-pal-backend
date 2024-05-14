@@ -1,5 +1,6 @@
 package com.exampal.service;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
@@ -14,11 +15,11 @@ public interface UserService {
 	
 	public User createUser(User user ,Boolean isHostAccount) throws Exception;
 	
-	public List<User> getAllUser();
+	public List<User> getAllUser( Principal principal);
 	
-	public User getUserById(Long id);
+	public User getUserById(Long id , Principal principal);
 	
-	public User updateUser(Long id , User user);
+	public User updateUser(Long id , User user , Principal principal);
 	
-	public User deleteUser(Long id);
+	public User deleteUser(Long id , Principal principal);
 }

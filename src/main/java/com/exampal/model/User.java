@@ -13,6 +13,10 @@ import org.springframework.stereotype.Service;
 import com.exampal.model.quiz.Quiz;
 import com.exampal.model.quiz.QuizAttempt;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -42,6 +46,9 @@ public class User implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String username;
+	
+	
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 	private String firstName;
 	private String lastName;
