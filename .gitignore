@@ -4,6 +4,13 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+
+# exclude everything inside uploads folder
+/src/main/resources/static/uploads/*
+# exception to uploads folder
+!/src/main/resources/static/uploads/.gitkeep
+
+
 ### STS ###
 .apt_generated
 .classpath

@@ -19,6 +19,12 @@ public class ExceptionController {
 	@ExceptionHandler(UnuthorizedAccessException.class)
 	public ResponseEntity<ApiResponse> unAuthorisedAccess(UnuthorizedAccessException exp)
 	{
-		return new ResponseEntity<ApiResponse>(new ApiResponse(exp.getMessage(),false) , HttpStatus.NOT_FOUND);
+		return new ResponseEntity<ApiResponse>(new ApiResponse(exp.getMessage(),false) , HttpStatus.UNAUTHORIZED);
+	}
+	
+	@ExceptionHandler(StorageException.class)
+	public ResponseEntity<ApiResponse> storageExp(StorageException exp)
+	{
+		return new ResponseEntity<ApiResponse>(new ApiResponse(exp.getMessage(),false) , HttpStatus.FORBIDDEN);
 	}
 }

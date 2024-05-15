@@ -55,7 +55,7 @@ public class User implements UserDetails {
 	private String email;
 	private String phone;
 	private boolean enabled = true;
-	private String profile;
+	private String profile_pic;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL , fetch = FetchType.EAGER )
 	private Set<UserRole> userRole = new HashSet<UserRole>();

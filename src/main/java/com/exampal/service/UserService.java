@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.exampal.model.Role;
 import com.exampal.model.User;
@@ -19,7 +20,7 @@ public interface UserService {
 	
 	public User getUserById(Long id , Principal principal);
 	
-	public User updateUser(Long id , User user , Principal principal);
+	public User updateUser(Long id , User user , Principal principal, MultipartFile profileImage);
 	
 	public User deleteUser(Long id , Principal principal);
 }

@@ -1,5 +1,6 @@
 package com.exampal.service.impl;
 
+import java.nio.file.Files;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.HashSet;
@@ -9,6 +10,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.exampal.exception.ResourceNotFoundException;
 import com.exampal.exception.UnuthorizedAccessException;
@@ -17,6 +19,7 @@ import com.exampal.model.User;
 import com.exampal.model.UserRole;
 import com.exampal.repo.RoleRepository;
 import com.exampal.repo.UserRepository;
+import com.exampal.service.StorageService;
 import com.exampal.service.UserService;
 @Service
 public class UserServiceImpl implements UserService {
@@ -29,6 +32,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private StorageService storageService;
 	
 	@Override
 	public User createUser(User user,Boolean isHostAccount) throws Exception {
@@ -76,21 +82,43 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User updateUser(Long id, User user , Principal principal) {
+	public User updateUser(Long id, User user , Principal principal, MultipartFile profileImage) {
 		
 		checkAccess(id, principal);
 		
+		
 		User userResult = userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User", "User ID", id));
-		user.setId(userResult.getId());
-		userRepository.save(user);
-		return user;
+
+		if(profileImage!=null && !profileImage.isEmpty())
+		{
+			String suff = profileImage.getOriginalFilename().substring(profileImage.getOriginalFilename().lastIndexOf("."));
+			String picName = "User"+userResult.getId()+suff;
+			user.setProfile_pic(picName);
+			
+			this.storageService.store(profileImage , picName);
+		}
+			
+		
+		
+		if(user.getEmail()!=null)
+			userResult.setEmail(user.getEmail());
+		if(user.getFirstName()!=null)
+			userResult.setFirstName(user.getFirstName());
+		if(user.getLastName()!=null)
+			userResult.setLastName(user.getLastName());
+		if(user.getPassword()!=null)
+			userResult.setPassword(this.passwordEncoder.encode(user.getPassword()));
+		if(user.getPhone()!=null)
+			userResult.setPhone(user.getPhone());
+		if(user.getUsername()!=null)
+			userResult.setUsername(user.getUsername());
+		return userRepository.save(userResult);
 	}
 
 	private void checkAccess(Long id, Principal principal) {
 		User principal_user = this.userRepository.findUserByUsername(principal.getName());
 		
 		boolean isHost = principal_user.getUserRole().stream().anyMatch(ur->ur.getRole().getRole()=="admin");
-		System.out.println( principal_user.getId().equals(id));
 		if(isHost||!principal_user.getId().equals(id))
 			throw new UnuthorizedAccessException("User", "userId", id);
 	}

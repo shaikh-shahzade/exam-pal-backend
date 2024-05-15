@@ -13,12 +13,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.exampal.model.User;
 import com.exampal.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.annotation.MultipartConfig;
 
 @RestController
 @RequestMapping("user")
@@ -34,6 +37,7 @@ public class UserController {
 		return this.userService.getUserById(id,principal);
 	}
 
+	@Operation(description = "Get Users List")
 	@GetMapping("v1")
 	public List<User> getAlluser(Principal principal) {
 
@@ -43,19 +47,24 @@ public class UserController {
 	@PostMapping("v1")
 	public User createUser(
 			@RequestBody User user,  
-			@RequestParam(defaultValue = "false") boolean isHostAccount) throws Exception 
+			@RequestParam(defaultValue = "false") boolean isHostAccount
+			) throws Exception 
 	{
 		return this.userService.createUser(user, isHostAccount);
 	}
 	
-	@PatchMapping("v1/{id}")
+	@PatchMapping("v1/{id}" )
 	public User updateUser(
-			@RequestBody User user,
+			
+			@RequestPart(name = "user") User user,
 			@PathVariable Long id,
-			Principal principal)
+			@RequestPart("profile-image") MultipartFile profileImage,
+			Principal principal
+			
+			
+			)
 	{
-		System.out.println("called");
-		return this.userService.updateUser(id,user,principal);
+		return this.userService.updateUser(id,user,principal,profileImage);
 	}
 	
 	@DeleteMapping("v1/{id}")

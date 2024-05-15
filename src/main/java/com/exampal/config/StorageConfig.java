@@ -1,5 +1,8 @@
 package com.exampal.config;
 
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,9 +15,10 @@ import lombok.Setter;
 @Setter
 public class StorageConfig {
 	
-	private String location = "uploads";
+	private String location = "src\\main\\resources\\static\\uploads";
 
 	public String getLocation() {
+		
 		return location;
 	}
 

@@ -26,18 +26,20 @@ public class FileStorageService implements StorageService{
             throw new StorageException("File upload location can not be Empty."); 
         }
 
-		this.rootLocation = Paths.get(storageConfig.getLocation());
+		this.rootLocation = Paths .get(storageConfig.getLocation());
 	}
 	
 	@Override
-	public void store(MultipartFile file) {
+	public void store(MultipartFile file , String filename) {
 		try {
 			if (file.isEmpty()) {
 				throw new StorageException("Failed to store empty file.");
 			}
 			Path destinationFile = this.rootLocation.resolve(
-					Paths.get(file.getOriginalFilename()))
+					Paths.get(filename))
 					.normalize().toAbsolutePath();
+			
+			System.out.println(destinationFile.toUri());
 			if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
 				throw new StorageException(
 						"Cannot store file outside current directory.");
