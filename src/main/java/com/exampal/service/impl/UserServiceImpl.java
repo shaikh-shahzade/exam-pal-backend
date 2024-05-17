@@ -59,8 +59,8 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		role =this.roleRepository.save(role);
-		userRole.setUser(user);
-		userRole.setRole(role);
+		//userRole.setUser(user);
+		//userRole.setRole(role);
 		user.setUserRole(Set.of(userRole));
 		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
 		user = this.userRepository.save(user);
@@ -118,17 +118,19 @@ public class UserServiceImpl implements UserService {
 	private void checkAccess(Long id, Principal principal) {
 		User principal_user = this.userRepository.findUserByUsername(principal.getName());
 		
-		boolean isHost = principal_user.getUserRole().stream().anyMatch(ur->ur.getRole().getRole()=="admin");
-		if(isHost||!principal_user.getId().equals(id))
-			throw new UnuthorizedAccessException("User", "userId", id);
+		boolean isHost = principal_user.getUserRole().stream().anyMatch(ur->ur.getRole().getRole().equals("admin"));
+		if(isHost||principal_user.getId().equals(id)) return;
+		throw new UnuthorizedAccessException("User", "userId", id);
 	}
 
 	@Override
 	public User deleteUser(Long id , Principal principal) {
 		checkAccess(id, principal);
-		User userResult = userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User", "User ID", id));
-		userRepository.delete(userResult);
-		return userResult;
+		
+		//User userResult = userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User", "User ID", id));
+		System.out.println("deletedfwd");
+		userRepository.deleteById(id);
+		return null;
 	}
 
 }

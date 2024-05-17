@@ -28,7 +28,5 @@ public class Role {
 	private Long id;
 	private String role;
 	
-	@OneToMany(mappedBy ="role" ,fetch = FetchType.EAGER , cascade = CascadeType.ALL)
-	@JsonIgnore
-	Set<UserRole> userRole = new HashSet<UserRole>();
+	
 }

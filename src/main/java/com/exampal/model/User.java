@@ -57,17 +57,17 @@ public class User implements UserDetails {
 	private boolean enabled = true;
 	private String profile_pic;
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL , fetch = FetchType.EAGER )
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL , fetch = FetchType.EAGER , orphanRemoval=true  )
 	private Set<UserRole> userRole = new HashSet<UserRole>();
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonIgnore
-	private List<Quiz> quizes = new ArrayList<Quiz>() ; 
-	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonIgnore
-	private List<QuizAttempt> quizAttempt = new ArrayList<QuizAttempt>() ;
-	
+//	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER , orphanRemoval=true )
+//	@JsonIgnore
+//	private List<Quiz> quizes = new ArrayList<Quiz>() ; 
+//	
+//	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER , orphanRemoval=true )
+//	@JsonIgnore
+//	private List<QuizAttempt> quizAttempt = new ArrayList<QuizAttempt>() ;
+//	
 	
 	//Security Methods
 	

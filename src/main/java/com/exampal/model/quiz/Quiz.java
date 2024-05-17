@@ -54,7 +54,7 @@ public class Quiz {
 	private String difficulty;
 	
 	
-	@ManyToOne()
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private User user;
 	

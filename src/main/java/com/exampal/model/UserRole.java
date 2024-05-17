@@ -2,6 +2,7 @@ package com.exampal.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -31,10 +32,11 @@ public class UserRole {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JsonIgnore
 	private User user;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne( cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Role role;
 }
