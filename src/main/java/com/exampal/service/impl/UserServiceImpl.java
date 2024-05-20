@@ -59,10 +59,13 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		role =this.roleRepository.save(role);
-		//userRole.setUser(user);
-		//userRole.setRole(role);
+//		userRole.setUser(user);
+		userRole.setRole(role);
 		user.setUserRole(Set.of(userRole));
 		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+		
+		user.setProfile_pic("default.png");
+		
 		user = this.userRepository.save(user);
 		return user;
 	}
@@ -93,7 +96,7 @@ public class UserServiceImpl implements UserService {
 		{
 			String suff = profileImage.getOriginalFilename().substring(profileImage.getOriginalFilename().lastIndexOf("."));
 			String picName = "User"+userResult.getId()+suff;
-			user.setProfile_pic(picName);
+			userResult.setProfile_pic(picName);
 			
 			this.storageService.store(profileImage , picName);
 		}
