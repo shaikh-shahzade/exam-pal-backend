@@ -11,8 +11,8 @@ public interface QuizRepository extends JpaRepository<Quiz, Long> {
 
 	public Page<Quiz> findAll(Pageable pageable);
 	public Page<Quiz> findByTitleIgnoreCaseContaining(String title,Pageable pageable );
-	public Page<Quiz> findAllByUser(Pageable pageable,User user);
-	public Page<Quiz> findByTitleIgnoreCaseContainingAndUser(String title,Pageable pageable,User user );
+	public Page<Quiz> findAllByHost(Pageable pageable,User host);
+	public Page<Quiz> findByTitleIgnoreCaseContainingAndHost(String title,Pageable pageable,User host );
 
 
 }

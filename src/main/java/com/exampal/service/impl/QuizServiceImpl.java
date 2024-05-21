@@ -47,7 +47,7 @@ public class QuizServiceImpl implements QuizService {
 		// TODO Auto-generated method stub
 		User user = userRepo.findUserByUsername(username);
 		
-		quiz.setUser(user);
+		quiz.setHost(user);
 		Quiz q = quizRepo.save(quiz);
 		return q;
 	}
@@ -69,9 +69,9 @@ public class QuizServiceImpl implements QuizService {
 		{
 			User user = userRepo.findUserByUsername(principal.getName());
 			if(searchKey.isEmpty())
-				q = quizRepo.findAllByUser(pageable,user);
+				q = quizRepo.findAllByHost(pageable,user);
 				else
-				q= quizRepo.findByTitleIgnoreCaseContainingAndUser(searchKey, pageable,user);
+				q= quizRepo.findByTitleIgnoreCaseContainingAndHost(searchKey, pageable,user);
 				
 		}
 		else

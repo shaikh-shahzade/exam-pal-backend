@@ -9,7 +9,9 @@ import org.hibernate.annotations.GeneratorType;
 import org.hibernate.id.factory.spi.GenerationTypeStrategy;
 
 import com.exampal.model.User;
+import com.exampal.model.Enum.DIFFICULTY;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -51,12 +53,12 @@ public class Quiz {
 	private LocalDateTime lastDate;
 	@Column(name = "startDate", columnDefinition = "TIMESTAMP")
 	private LocalDateTime startDate;
-	private String difficulty;
+	private DIFFICULTY difficulty;
 	
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonIgnore
-	private User user;
+	@JoinColumn(name="host_user")
+	private User host;
 	
 	@OneToMany(mappedBy = "quiz" ,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Question> question = new ArrayList<Question>();
@@ -65,9 +67,9 @@ public class Quiz {
 	private Category category;
 	//private int cid;
 	
-	@OneToMany(mappedBy = "quiz" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonIgnore
-	private List<QuizAttempt> quizAttempt = new ArrayList<QuizAttempt>();
+//	@OneToMany(mappedBy = "quiz" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@JsonIgnore
+//	private List<QuizAttempt> quizAttempt = new ArrayList<QuizAttempt>();
 	
 	
 }
