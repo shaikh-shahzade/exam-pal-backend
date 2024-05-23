@@ -31,7 +31,7 @@ public class Category {
 	private String title;
 	private String description;
 	
-	@OneToMany(mappedBy = "category" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
-	@JsonIgnore
-	private List<Quiz> quiz;
+//	@OneToMany(mappedBy = "category" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+//	@JsonIgnore
+//	private List<Quiz> quiz;
 }

@@ -46,7 +46,6 @@ public class QuizServiceImpl implements QuizService {
 	public Quiz createQuiz(Quiz quiz , String username) {
 		// TODO Auto-generated method stub
 		User user = userRepo.findUserByUsername(username);
-		
 		quiz.setHost(user);
 		Quiz q = quizRepo.save(quiz);
 		return q;
@@ -106,7 +105,9 @@ public class QuizServiceImpl implements QuizService {
 		q.setTitle(quiz.getTitle());
 		q.setLastDate(quiz.getLastDate());
 		q.setStartDate(quiz.getStartDate());
-		q.setCategory(quiz.getCategory());
+		
+		if(quiz.getCategory()!=null)
+		q.setCategory(catRepository.findById(quiz.getCategory().getCid()).get());
 		q.setPassingMarks(quiz.getPassingMarks());
 		List<Question> questions;
 		
@@ -122,7 +123,7 @@ public class QuizServiceImpl implements QuizService {
 			
 		q.setQuestion(quiz.getQuestion());
 		q = quizRepo.save(q);
-		
+		System.out.print(q.getCategory().getTitle());
 		return q;
 	}
 

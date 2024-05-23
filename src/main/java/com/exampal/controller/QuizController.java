@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -61,14 +62,14 @@ public class QuizController {
 		return quizService.createQuiz(quiz , principal.getName());
 	}
 	
-	@PutMapping("")
-	public	Quiz updateQuiz(@RequestHeader Long id , @RequestBody Quiz quiz)
+	@PatchMapping("/{id}")
+	public	Quiz updateQuiz(@PathVariable Long id , @RequestBody Quiz quiz)
 	{
 		return quizService.updateQuiz(id, quiz);
 	}
 	
-	@DeleteMapping("")
-	public	Quiz deleteQuiz(@RequestHeader Long id )
+	@DeleteMapping("/{id}")
+	public	Quiz deleteQuiz(@PathVariable Long id )
 	{
 		return quizService.deleteQuiz(id);
 	}

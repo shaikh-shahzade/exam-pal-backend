@@ -56,16 +56,17 @@ public class Quiz {
 	private DIFFICULTY difficulty;
 	
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne( fetch = FetchType.LAZY)
 	@JoinColumn(name="host_user")
 	private User host;
 	
 	@OneToMany(mappedBy = "quiz" ,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Question> question = new ArrayList<Question>();
 	
-	@ManyToOne()
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="category")
 	private Category category;
-	//private int cid;
+	
 	
 //	@OneToMany(mappedBy = "quiz" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //	@JsonIgnore
