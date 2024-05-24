@@ -44,9 +44,5 @@ public class QuestionController {
 	{
 		return questionService.updateQuestions(questions , quizId);
 	}
-	@DeleteMapping("{id}")
-	public List<Question> deleteQuestions(@PathVariable Long id)
-	{
-		return null;
-	}
+	
 }

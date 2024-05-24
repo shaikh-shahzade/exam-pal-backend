@@ -3,7 +3,9 @@ package com.exampal.model.quiz;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.annotations.GeneratorType;
 import org.hibernate.id.factory.spi.GenerationTypeStrategy;
@@ -60,8 +62,8 @@ public class Quiz {
 	@JoinColumn(name="host_user")
 	private User host;
 	
-	@OneToMany(mappedBy = "quiz" ,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Question> question = new ArrayList<Question>();
+	@OneToMany(mappedBy = "quiz"  ,cascade = CascadeType.ALL,  fetch = FetchType.LAZY)
+	private Set<Question> question = new HashSet<Question>();
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="category")
