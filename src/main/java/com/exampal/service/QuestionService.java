@@ -14,5 +14,4 @@ public interface QuestionService {
 
 	public List<Question> updateQuestions(List<Question> questions, Long quizId);
 	
-	public Set<Question> updateOrModifyQuestions(Set<Question> questions, Quiz quiz);
-}
+	}

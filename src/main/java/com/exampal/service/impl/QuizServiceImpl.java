@@ -45,8 +45,6 @@ public class QuizServiceImpl implements QuizService {
 	@Autowired
 	CategoryRepository catRepository;
 
-	@Autowired
-	QuestionServiceImpl questionServiceImpl;
 	
 	@Override
 	public Quiz createQuiz(Quiz quiz, String username) {
@@ -112,7 +110,13 @@ public class QuizServiceImpl implements QuizService {
 //		
 		
 		for(Question q2 :quiz.getQuestion())
+			{
+			
+			
+			
 			q2.setQuiz(retrievedQuiz);
+			
+			}
 		retrievedQuiz.getQuestion().clear();
 		retrievedQuiz.getQuestion().addAll(quiz.getQuestion());
 		

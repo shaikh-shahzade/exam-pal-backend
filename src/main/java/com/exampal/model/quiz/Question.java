@@ -40,8 +40,9 @@ public class Question {
 	@JsonIgnore
 	private Quiz quiz;
 	
-//	@OneToMany(mappedBy = "question" , fetch = FetchType.EAGER , cascade = CascadeType.ALL)
-//	private List<Answer> answers = new ArrayList<Answer>();
+	@OneToMany(orphanRemoval = true, fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+	@JoinColumn(name="question")
+	private List<Answer> answers = new ArrayList<Answer>();
 //	
 //	@OneToMany(mappedBy = "question" , fetch = FetchType.EAGER , cascade = CascadeType.ALL)
 //	@JsonIgnore
