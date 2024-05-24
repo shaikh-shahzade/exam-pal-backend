@@ -13,6 +13,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -35,16 +36,16 @@ public class Question {
 	private String content;
 	
 	
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@ManyToOne
 	@JsonIgnore
 	private Quiz quiz;
 	
-	@OneToMany(mappedBy = "question" , fetch = FetchType.EAGER , cascade = CascadeType.ALL)
-	private List<Answer> answers = new ArrayList<Answer>();
-	
-	@OneToMany(mappedBy = "question" , fetch = FetchType.EAGER , cascade = CascadeType.ALL)
-	@JsonIgnore
-	private List<AttemptedQuestion> attemptedQuestions = new ArrayList<AttemptedQuestion>();
-	
+//	@OneToMany(mappedBy = "question" , fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+//	private List<Answer> answers = new ArrayList<Answer>();
+//	
+//	@OneToMany(mappedBy = "question" , fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+//	@JsonIgnore
+//	private List<AttemptedQuestion> attemptedQuestions = new ArrayList<AttemptedQuestion>();
+//	
 	
 }

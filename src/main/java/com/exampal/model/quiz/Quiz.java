@@ -62,7 +62,7 @@ public class Quiz {
 	@JoinColumn(name="host_user")
 	private User host;
 	
-	@OneToMany(mappedBy = "quiz"  ,cascade = CascadeType.ALL,  fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	private Set<Question> question = new HashSet<Question>();
 	
 	@ManyToOne(fetch = FetchType.EAGER)

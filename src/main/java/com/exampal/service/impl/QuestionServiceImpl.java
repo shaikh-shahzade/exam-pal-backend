@@ -27,14 +27,14 @@ public class QuestionServiceImpl implements QuestionService{
 	public List<Question> getQuestionsByQuizId(Long quizId) {
 		// TODO Auto-generated method stub
 		Quiz quiz = quizRepository.findById(quizId).orElseThrow(()->new ResourceNotFoundException("quiz", "Id", quizId));
-		return questionRepository.findByQuiz(quiz);
+		return questionRepository.findByQuiz(quiz.getQid());
 	}
 
 	@Override
 	public List<Question> createQuestions(List<Question> questions , Long quizId) {
 		// TODO Auto-generated method stub
 		Quiz quiz = quizRepository.findById(quizId).orElseThrow(()->new ResourceNotFoundException("quiz", "Id", quizId));
-		questions.forEach(q->q.setQuiz(quiz));
+		//questions.forEach(q->q.setQuiz(quiz));
 		questions = questionRepository.saveAll(questions);
 		return questions;
 	}
@@ -43,7 +43,7 @@ public class QuestionServiceImpl implements QuestionService{
 	public List<Question> updateQuestions(List<Question> questions, Long quizId) {
 		// TODO Auto-generated method stub
 		Quiz quiz = quizRepository.findById(quizId).orElseThrow(()->new ResourceNotFoundException("quiz", "Id", quizId));
-		questions.forEach(q->q.setQuiz(quiz));
+		//questions.forEach(q->q.setQuiz(quiz));
 		List<Question> q = questionRepository.saveAll(questions);
 		
 		return q;
@@ -53,15 +53,11 @@ public class QuestionServiceImpl implements QuestionService{
 	public Set<Question> updateOrModifyQuestions(Set<Question> questions, Quiz quiz) {
 		// TODO Auto-generated method stub
 		
-		
-
-		for (Question q2 : quiz.getQuestion()) {
-			q2.setQuiz(quiz);
-			for (Answer a : q2.getAnswers())
-				a.setQuestion(q2);
-
-			q2.setAnswers(q2.getAnswers());
-		}
+		for(Question q :questions)
+			q.setQuiz(quiz);
+			
+		quiz.setQuestion(questions);
+	
 		return quiz.getQuestion(); 
 	}
 

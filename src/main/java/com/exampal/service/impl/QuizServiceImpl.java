@@ -90,30 +90,35 @@ public class QuizServiceImpl implements QuizService {
 	}
 
 	@Override
+	@Transactional
 	public Quiz updateQuiz(Long qid, Quiz quiz) {
 		// TODO Auto-generated method stub
-		Quiz q = quizRepo.findById(qid).orElseThrow(() -> new ResourceNotFoundException("Quiz", "ID", qid));
-		q.setActive(quiz.isActive());
-		q.setDescription(quiz.getDescription());
-		q.setMaxMarks(quiz.getMaxMarks());
-		q.setMaxTime(quiz.getMaxTime());
-		q.setNoOfQuestions(quiz.getNoOfQuestions());
-		q.setTitle(quiz.getTitle());
-		q.setLastDate(quiz.getLastDate());
-		q.setStartDate(quiz.getStartDate());
+		Quiz retrievedQuiz = quizRepo.findById(qid).orElseThrow(() -> new ResourceNotFoundException("Quiz", "ID", qid));
+		retrievedQuiz.setActive(quiz.isActive());
+		retrievedQuiz.setDescription(quiz.getDescription());
+		retrievedQuiz.setMaxMarks(quiz.getMaxMarks());
+		retrievedQuiz.setMaxTime(quiz.getMaxTime());
+		retrievedQuiz.setNoOfQuestions(quiz.getNoOfQuestions());
+		retrievedQuiz.setTitle(quiz.getTitle());
+		retrievedQuiz.setLastDate(quiz.getLastDate());
+		retrievedQuiz.setStartDate(quiz.getStartDate());
 
 		if (quiz.getCategory() != null)
-			q.setCategory(catRepository.findById(quiz.getCategory().getCid()).get());
+			retrievedQuiz.setCategory(catRepository.findById(quiz.getCategory().getCid()).get());
 		
-		q.setPassingMarks(quiz.getPassingMarks());
+		retrievedQuiz.setPassingMarks(quiz.getPassingMarks());
 		
-		Set<Question> questions = questionServiceImpl.updateOrModifyQuestions(quiz.getQuestion(), quiz);
+//		Set<Question> questions = questionServiceImpl.updateOrModifyQuestions(quiz.getQuestion(), q);
+//		
 		
-
-		q.setQuestion(questions);
-		q = quizRepo.saveAndFlush(q);
-		System.out.print(q.getCategory().getTitle());
-		return q;
+		for(Question q2 :quiz.getQuestion())
+			q2.setQuiz(retrievedQuiz);
+		retrievedQuiz.getQuestion().clear();
+		retrievedQuiz.getQuestion().addAll(quiz.getQuestion());
+		
+		retrievedQuiz = quizRepo.save(retrievedQuiz);
+		System.out.print(retrievedQuiz.getCategory().getTitle());
+		return retrievedQuiz;
 	}
 
 	@Override
