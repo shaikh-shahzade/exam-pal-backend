@@ -35,11 +35,12 @@ public class Result {
 	private Integer correctAnswers;
 	private Long timeTaken;
 	
-	@OneToMany(mappedBy = "result" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+	@OneToMany( cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+	@JoinColumn(name="result")
 	private List<AttemptedQuestion> attemptedQuestion = new  ArrayList<AttemptedQuestion>();
 	
-	@OneToOne(mappedBy = "result",cascade = CascadeType.ALL , fetch = FetchType.EAGER)
-	@JsonIgnore
-	private QuizAttempt attempt;
+//	@OneToOne(mappedBy = "result",cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+//	@JsonIgnore
+//	private QuizAttempt attempt;
 	
 }

@@ -38,8 +38,5 @@ public class AttemptedQuestion {
 	@ManyToOne()
 	private Answer answer;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JsonIgnore
-	private Result result;
 	
 }

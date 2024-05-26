@@ -104,7 +104,7 @@ public class QuizAttemptImpl implements QuizAttemptService {
 			.findById(attemptQ.getQuestion().getQuesid()).orElseThrow()
 			);
 			
-			attemptQ.setResult(result);
+			//attemptQ.setResult(result);
 			
 			return attemptQ;
 		}).collect(Collectors.toList());
