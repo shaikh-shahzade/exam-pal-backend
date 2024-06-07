@@ -46,6 +46,7 @@ public class QuizServiceImpl implements QuizService {
 	CategoryRepository catRepository;
 
 	
+	@Transactional
 	@Override
 	public Quiz createQuiz(Quiz quiz, String username) {
 		// TODO Auto-generated method stub

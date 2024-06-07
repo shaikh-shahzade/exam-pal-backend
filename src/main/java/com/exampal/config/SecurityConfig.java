@@ -31,7 +31,6 @@ public class SecurityConfig {
 		.authorizeHttpRequests()
 		.requestMatchers(HttpMethod.POST ,"/user/v1")
 		.permitAll()
-		
 		.requestMatchers("/swagger-ui/**","/v3/api-docs/**","auth/generate","/quiz/retrieve","/public/**","/images/**")
 		.permitAll()
 		.anyRequest()
@@ -42,8 +41,8 @@ public class SecurityConfig {
 		.and()
 		.sessionManagement()
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		;
-		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+		.and()
+		.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
 
 		return http.build();

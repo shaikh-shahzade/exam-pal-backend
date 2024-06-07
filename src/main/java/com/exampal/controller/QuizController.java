@@ -26,9 +26,9 @@ import com.exampal.service.QuizService;
 
 import jakarta.websocket.server.PathParam;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("quiz")
-@CrossOrigin("*")
 public class QuizController {
 
 	@Autowired
