@@ -28,6 +28,8 @@ public class SecurityConfig {
 	public SecurityFilterChain filter(HttpSecurity http) throws Exception
 	{
 		http.csrf().disable()
+		.cors()
+		.and()
 		.authorizeHttpRequests()
 		.requestMatchers(HttpMethod.POST ,"/user/v1")
 		.permitAll()

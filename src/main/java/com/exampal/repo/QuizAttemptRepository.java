@@ -13,6 +13,6 @@ public interface QuizAttemptRepository extends JpaRepository<QuizAttempt, Long> 
 
 	public List<QuizAttempt> findByQuiz(Quiz quiz);
 	
-	@Query(value = "SELECT qa FROM QuizAttempt qa where id=52")
+	@Query(value = "SELECT qa FROM QuizAttempt qa where id=:userId")
 	public List<QuizAttempt> findByHost(@Param(value = "userId") Long userId);
 }
